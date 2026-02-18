@@ -7,7 +7,7 @@ A firmware project for the **ESP32** that acts as a **Modbus TCP Slave**. It rea
 ## 📦 Features
 
 - 🌡️ Real-time temperature reading via DS18B20 sensor
-- 🔄 Auto-oscillating voltage simulation (bounces between 22.5V – 25.5V)
+- 🔄 Auto-oscillating voltage simulation
 - 🎛️ Manual voltage control with a rotary encoder
 - 📡 Modbus TCP server — any Modbus client can read/write values over WiFi
 - 🔢 Floating-point values packed into Modbus holding registers (32-bit float → 2 × 16-bit registers)
@@ -19,7 +19,7 @@ A firmware project for the **ESP32** that acts as a **Modbus TCP Slave**. It rea
 ### 1. 📶 WiFi Config
 ```cpp
 const char* ssid = "WB-301";
-const char* password = "@Ur&@81$%G$";
+const char* password = "";
 ```
 Sets the WiFi network name and password the ESP32 connects to on startup. Change these to match your own network.
 
@@ -97,7 +97,7 @@ void loop() { ... }
 Runs continuously. Here's what happens each cycle:
 
 #### `mb.task()`
-Processes any incoming Modbus TCP requests from clients (e.g. SCADA, Node-RED, etc.)
+Processes any incoming Modbus TCP requests from clients
 
 #### Client Voltage Write
 ```cpp
@@ -128,7 +128,7 @@ Detects knob rotation. Each tick of the encoder adds or subtracts 0.1V. Turning 
 ```cpp
 voltage = constrain(voltage, HARD_MIN, HARD_MAX); // 15.0 – 30.0 V
 ```
-Clamps voltage to a safe range no matter what — encoder, client writes, or auto updates can't go outside 15V–30V.
+Clamps voltage to a safe range no matter what — encoder, client writes (in testing), or auto updates can't go outside 15V–30V.
 
 #### Temperature Reading
 ```cpp
@@ -189,8 +189,8 @@ Make sure you have the following installed:
 ### Step 2 — Clone the Repository
 Open a terminal and run:
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-cd YOUR_REPO_NAME
+https://github.com/varad177/ESP32-modbus-tcp.git
+cd ESP32-modbus-tcp
 ```
 
 ---
@@ -216,15 +216,18 @@ const char* password = "YOUR_WIFI_PASSWORD";
 PlatformIO will auto-install libraries defined in `platformio.ini`. Make sure your `platformio.ini` includes:
 
 ```ini
-[env:esp32dev]
-platform  = espressif32
-board     = esp32dev
+[env:esp32doit-devkit-v1]
+platform = espressif32
+board = esp32doit-devkit-v1
 framework = arduino
+
+upload_port = COM4
+monitor_speed = 115200
 
 lib_deps =
     emelianov/modbus-esp8266
-    milesburton/DallasTemperature
     paulstoffregen/OneWire
+    milesburton/DallasTemperature
 ```
 
 ---
@@ -260,7 +263,7 @@ Voltage = 24.10 V | Temperature = 26.43 °C
 ---
 
 ### Step 8 — Connect a Modbus Client
-Use any Modbus TCP client (e.g. [Modbus Poll](https://www.modbustools.com/modbus_poll.html), Node-RED, or Simply Modbus) to connect to the ESP32's IP address on **port 502**.
+Use any Modbus TCP client (e.g. [Modbus Poll](https://www.modbustools.com/modbus_poll.html), Simply Modbus) to connect to the ESP32's IP address on **port 502**.
 
 Read registers 0–1 for voltage and 4–5 for temperature as a **32-bit float, Big-Endian word order**.
 
@@ -274,8 +277,3 @@ Read registers 0–1 for voltage and 4–5 for temperature as a **32-bit float, 
 | `ModbusIP.h` (modbus-esp8266) | Modbus TCP server |
 | `DallasTemperature.h` | DS18B20 temperature sensor |
 | `OneWire.h` | OneWire communication protocol |
-
----
-
-## 📄 License
-MIT — free to use and modify.
