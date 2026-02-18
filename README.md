@@ -172,8 +172,6 @@ Only prints to the serial monitor when voltage or temperature changes by more th
 | DS18B20 VCC | 3.3V |
 | DS18B20 GND | GND |
 
-> ⚠️ DS18B20 requires a **4.7kΩ pull-up resistor** between the Data pin and 3.3V.
-
 ---
 
 ## 🚀 How to Run (PlatformIO)
