@@ -172,6 +172,11 @@ Only prints to the serial monitor when voltage or temperature changes by more th
 | DS18B20 VCC | 3.3V |
 | DS18B20 GND | GND |
 
+
+##Pin Out Diagram
+<img width="5457" height="2933" alt="TCP_OPC_UA" src="https://github.com/user-attachments/assets/4e1fcfcd-026c-4942-9f7b-cdd6617bf7eb" />
+
+
 ---
 
 ## 🚀 How to Run (PlatformIO)
