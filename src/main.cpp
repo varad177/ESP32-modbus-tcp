@@ -6,8 +6,8 @@
 #include <DallasTemperature.h>
 
 // ================= WIFI CONFIG =================
-const char* ssid     = "WB-301";
-const char* password = "@Ur&@81$%G$";
+const char* ssid     = "";
+const char* password = "";
 
 // ================= MODBUS ======================
 ModbusIP mb;
